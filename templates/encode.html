@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} Encode {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="form-container">
+            <h1>Encode a message inside an image!</h1>
+            <form action="/image/encode" method="POST" enctype="multipart/form-data">
+                <label for="file">Choose a PNG image:</label>
+                <input type="file" id="file" name="file" accept=".png" required><br>
+
+                <label for="message">Enter a message:</label>
+                <input type="text" id="message" name="message" placeholder="Enter message" required><br>
+
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+        <div class="image-box">
+            <h2>The Last Encoded Image:</h2>
+            {% if encoded_image %}
+                <img src="{{ encoded_image }}" alt="Encoded Image">
+            {% else %}
+                <p>No image was encoded yet.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

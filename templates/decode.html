@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} Decode {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="form-container">
+            <h1>Decode a message from an encoded image!</h1>
+            <form action="/image/decode" method="POST" enctype="multipart/form-data">
+                <label for="file">Choose a PNG image:</label>
+                <input type="file" id="file" name="file" accept=".png" required><br>
+
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+        <div class="image-box">
+            <h2>The Last Decoded Image:</h2>
+            {% if decoded_image %}
+                <img src="{{ decoded_image }}" alt="Decoded Image">
+            {% else %}
+                <p>No image was decoded yet.</p>
+            {% endif %}
+        </div>
+        <div class="decoded-text">
+            <h2>The Decoded Text:</h2>
+            {% if decoded_text %}
+                <p>{{ decoded_text }}</p>
+            {% else %}
+                <p>No image was decoded yet.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} Steganography Tool {% endblock %}
+
+{% block body %}
+    <div class="home_page">
+        <h1><b>What is Steganography?</b></h1>
+        <p>
+            Steganography is the practice of concealing secret information within an ordinary, non-secret file or
+            message
+            to avoid detection. It is a technique used to protect sensitive data by embedding it within another file,
+            such
+            as an image or audio file, without changing the file's appearance or functionality.
+        </p>
+
+        <h2>Encoding</h2>
+        <p>
+            Choose an image file and enter the message to hide within it.
+        </p>
+        <p><a href="/encode">Encode Image</a></p>
+
+        <h2><b>Decoding</b></h2>
+        <p>
+            Upload an encoded image to extract the hidden message.
+        </p>
+        <p><a href="/decode">Decode Image</a></p>
+    </div>
+{% endblock %}
