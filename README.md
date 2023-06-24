@@ -31,21 +31,21 @@ module and the _flask_ web framework.
 
 ## Installation
 
-The project can be built using the following command:
+The project can be built from the Dockerfile using the following command:
 
 ```bash
-docker build -t iap-tema2 .
+docker build -t stegano-tool .
 ```
 
 In order to start the server from the docker image on _localhost:8080_:
 
 ```bash
-docker run -p 8080:80 -it iap-tema2
+docker run -p 8080:80 -it stegano-tool
 ```
 
 Alternatively, the functions used for encoding and decoding can be used
 directly from the python scrypt:
 
 ```bash
-python3 stegano.py [-e / -d] input_file [-m message] -o output_file
+python3 stegano.py [-e/-d] input_file [-m message] -o output_file
 ```
