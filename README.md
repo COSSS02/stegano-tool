@@ -1,7 +1,5 @@
 # Steganography tool
 
-**by Ionescu Mihai-Cosmin - 314CC**
-
 ## Description
 
 This project implements a method for you to conceal a message inside any
@@ -49,5 +47,5 @@ Alternatively, the functions used for encoding and decoding can be used
 directly from the python scrypt:
 
 ```bash
-python3 stegano.py [-e/-d] [-m message] -o output_file
+python3 stegano.py [-e / -d] input_file [-m message] -o output_file
 ```
