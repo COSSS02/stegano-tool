@@ -3,7 +3,7 @@
 ## Description
 
 This project implements a method for you to conceal a message inside any
-regular PNG image, while also providing an easy way to decode any other message
+RGB/RGBA PNG image, while also providing an easy way to decode any other message
 that was hidden using the same algorithm, all in a simple web interface.
 
 ## Implementation

@@ -46,7 +46,7 @@ def encode_image():
 
     encode_string(image, message, 'static/encoded.png')
 
-    return send_file('static/encoded.png', mimetype='image/png')
+    return send_file('static/encoded.png', mimetype='image/png', as_attachment=True)
 
 
 @app.route('/image/decode', methods=['POST'])
@@ -56,10 +56,7 @@ def decode_image():
 
     decode_string(image, 'static/decoded.txt')
 
-    file = open('static/decoded.txt', 'r')
-    message = file.read()
-    file.close()
-    return message
+    return send_file('static/decoded.txt', as_attachment=True)
 
 
 @app.route('/image/last/encoded')

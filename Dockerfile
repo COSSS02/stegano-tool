@@ -7,7 +7,7 @@ WORKDIR /app
 RUN apk add --update py3-pip
 
 COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN pip install --break-system-packages --no-cache-dir -r /app/requirements.txt
 
 COPY app.py stegano.py /app/
 COPY templates/* /app/templates/

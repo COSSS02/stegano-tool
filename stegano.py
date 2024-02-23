@@ -1,9 +1,15 @@
 from PIL import Image
 from argparse import ArgumentParser
+import os.path
 
 
 def encode_string(image, message, output_file):
-    im = Image.open(image)
+    init_im = Image.open(image)
+    if init_im.mode == 'RGBA':
+        im = init_im.convert('RGB')
+    else:
+        im = init_im
+
     pixels = list(im.getdata())
 
     # length of the message in binary format, represented on 18 bits
@@ -35,17 +41,27 @@ def encode_string(image, message, output_file):
         result = [current_pixels[index] & 0xFE | (ord(bin_letter[index]) % 2)
                   for index in range(len(bin_letter))]
 
-        # modifing the original pixels
+        # modifying the original pixels
         it = iter(result)
         pixels[i * 3 + 6:i * 3 + 9] = list(zip(it, it, it))
 
     new_im = Image.new(im.mode, im.size)
     new_im.putdata(pixels)
+
+    if init_im.mode == 'RGBA':
+        new_im = new_im.convert('RGBA')
+        new_im.putalpha(init_im.split()[3])
+
     new_im.save(output_file)
 
 
 def decode_string(image, output_file):
-    im = Image.open(image)
+    init_im = Image.open(image)
+    if init_im.mode == 'RGBA':
+        im = init_im.convert('RGB')
+    else:
+        im = init_im
+
     pixels = list(im.getdata())
 
     # the pixels where the length of the message is stored
@@ -86,13 +102,13 @@ if __name__ == "__main__":
     parser = ArgumentParser(description='Steganography Tool')
 
     parser.add_argument('-e', '--encode',
-                        help='Path to existing image to encode message into')
+                        help='Path to existing PNG image to encode message into')
     parser.add_argument('-d', '--decode',
-                        help='Path to existing image to decode message from')
+                        help='Path to existing PNG image to decode message from')
     parser.add_argument('-m', '--message',
                         help='Message to be encrypted in output image')
     parser.add_argument('-o', '--output',
-                        help='Path to output file(image for encoding '
+                        help='Path to output file(PNG image for encoding '
                              'or text file for decoding)')
 
     args = parser.parse_args()
@@ -101,16 +117,28 @@ if __name__ == "__main__":
         parser.error('No action requested, add --encode or --decode')
 
     if args.encode:
+        if not os.path.exists(args.encode):
+            parser.error('The PNG image for encoding could not be found')
+
+        if not args.encode.lower().endswith('.png'):
+            parser.error('The file for encoding is not a PNG image')
+
         if not args.message:
             parser.error('No message to encode, add --message')
 
         if not args.output:
-            parser.error('No file for image with encoded message, add --output')
+            parser.error('No PNG image for encoding, add --output')
 
         encode_string(args.encode, args.message, args.output)
 
     if args.decode:
+        if not os.path.exists(args.decode):
+            parser.error('The PNG image for decoding could not be found')
+
+        if not args.decode.lower().endswith('.png'):
+            parser.error('The file for decoding is not a PNG image')
+
         if not args.output:
-            parser.error('No file for the decoded message, add --output')
+            parser.error('No text file for the decoded message, add --output')
 
         decode_string(args.decode, args.output)
